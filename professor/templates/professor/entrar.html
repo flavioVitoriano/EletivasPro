@@ -1,0 +1,41 @@
+{%load static%}
+<html>
+<head>
+  <title>
+    EletivasPro Professor - Entrar
+  </title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/w3.css'%}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+<body>
+<div class="w3-container w3-center">
+<div class="w3-card-4" style="background-color: white;">
+  <div class="w3-container w3-blue" style="text-align: center;">
+    <h2>Entre com sua conta de professor</h2>
+  </div>
+  <form class="w3-container" action="{%url 'professor:entrar'%}" method="POST">
+  {% csrf_token %}
+    <p>      
+    <label class="w3-text-dark-gray"><b>Matrícula:</b></label>
+    <input class="w3-input w3-border w3-white" name="matricula_professor" type="number"></p>
+    <p>      
+    <label class="w3-text-dark-gray"><b>Senha:</b></label>
+    <input class="w3-input w3-border w3-white" name="senha_professor" type="password"></p>
+    <p>
+    <button class="w3-btn w3-blue">Entrar</button></p>
+  </form>
+</div>
+<div>
+    {%if erro is not None%}
+    <div class="w3-panel w3-red" style="text-align: center;">
+    <p class="error-hard">{{erro}}<p></p>
+    {%endif%}
+</div>
+</div>
+
+</body>
+</html>
