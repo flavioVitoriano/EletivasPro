@@ -33,7 +33,6 @@ def entrar(request):
 
     context = {
         'erro' : erro,
-        'aluno' : Aluno.objects.get(pk=request.session['aluno_id'])
     }
 
     return render(request,"aluno/entrar.html",context)
