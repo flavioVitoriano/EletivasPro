@@ -1,3 +1,4 @@
+{% load static %}
 {%include "base/navbar_aluno.html"%}
 <html lang="en">
 <head>
@@ -12,7 +13,11 @@
                     <h2>Página inicial - Aluno</h2>
                 </div>
                 <div class="w3-container w3-center">
+                   <img src="{%static 'img/avatar.svg'%}" style="width: 200px;height: 200px;">
                 <h3>Bem vindo(a) {{aluno.nome}}</h3>
+                </div>
+                <div class="w3-container">
+                    {%include 'base/intro.html'%}
                 </div>
         </div>
 </body>

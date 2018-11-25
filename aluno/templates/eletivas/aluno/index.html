@@ -20,7 +20,6 @@
             <p style="font-size: 20px;">{{eletiva.desc}}</p>
             </div>               
             <footer>
-                <h5>Vagas:{{eletiva.vagas_usadas}}/{{eletiva.vagas}}</h5>
                 <h5><b>Eletiva Lotada!</b></h5>
             </footer>
     </div>
@@ -34,7 +33,6 @@
             <p style="font-size: 20px;">{{eletiva.desc}}</p>
             </div>               
             <footer>
-                <h5>Vagas:{{eletiva.vagas_usadas}}/{{eletiva.vagas}}</h5>
                 <form action="{%url 'aluno:eletivas'%}" method="POST">
                     <a class="w3-btn w3-white" href="{%url 'aluno:eletiva' id=eletiva.pk%}">Ver informações</a>
                 </form>

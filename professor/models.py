@@ -26,6 +26,11 @@ class Eletiva(models.Model):
         ('2','Tarde'),
     )
 
+    ativo = (
+        (1,'Ativo'),
+        (2,'Não Ativo'),
+    )
+
     professor = models.ForeignKey(Professor,on_delete=models.CASCADE)
     nome = models.CharField("Nome",max_length=50)
     vagas = models.IntegerField("Número disponível de vagas",default=32)
@@ -33,6 +38,7 @@ class Eletiva(models.Model):
     dia = models.CharField("Dia da eletiva",max_length=1,choices=dias,default='1')
     periodo = models.CharField("Período da eletiva",max_length=1,choices=periodos,default='1')
     desc = models.TextField("Descrição da eletiva")
+    ativa = models.IntegerField("Ativado",choices=ativo,default=1)
 
 
     def __str__(self):
