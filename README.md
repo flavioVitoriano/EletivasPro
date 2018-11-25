@@ -22,7 +22,7 @@ python src/manage.py runserver
 
 Para acessar a plataforma, acesse em um navegador web:
 
-(http://localhost:8000/)
+http://localhost:8000/
 
 ## Mais informações
 Email para suporte: suporte.eletivaspro@gmail.com
