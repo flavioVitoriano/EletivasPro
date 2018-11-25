@@ -20,6 +20,10 @@ E então inicie o servidor de teste (django):
 python src/manage.py runserver
 ```
 
+Para acessar a plataforma, acesse em um navegador web:
+
+(http://localhost:8000/)
+
 ## Mais informações
 Email para suporte: suporte.eletivaspro@gmail.com
 
