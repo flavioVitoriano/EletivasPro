@@ -17,7 +17,7 @@ git clone https://github.com/EstudaPro/EletivasPro.git && cd EletivasPro && pip 
 E então inicie o servidor de teste (django):
 
 ```sh
-python manage.py runserver
+python src/manage.py runserver
 ```
 
 ## Mais informações
