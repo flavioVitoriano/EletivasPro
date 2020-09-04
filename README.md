@@ -12,12 +12,12 @@ A plataforma é livre e totalmente gratuita.
 Para baixar e testar a aplicação (usando **python3**):
 
 ```sh
-git clone https://github.com/EstudaPro/EletivasPro.git && cd EletivasPro && pip install -r requeriments.py
+git clone https://github.com/EstudaPro/EletivasPro.git && cd eletivaspro/eletivaspro && pip install -r requeriments.txt
 ```
 E então inicie o servidor de teste (django):
 
 ```sh
-python src/manage.py runserver
+python manage.py runserver
 ```
 
 Para acessar a plataforma, acesse em um navegador web:
