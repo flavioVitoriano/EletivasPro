@@ -1,0 +1,164 @@
+{% extends 'gestao/home_base.html' %}
+{% load static %}
+{% block title %}Ver Aluno {% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">{{ object.nome }}</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'backend:alunos-list' %}{{object.pk}}/" method="PATCH" id="aluno-form">
+                        {% include 'forms/aluno_update_form.html' %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-head">
+                    <h3 class="card-title text-center">Registros Ativos</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <th>Eletiva</th>
+                                <th>Dia</th>
+                                <th>Periodo</th>
+                                <th>Responsável</th>
+                                <th>Remover</th>
+                            </thead>
+                            <tbody>
+                                {% for registro in registros_ativos %}
+                                <tr>
+                                    <td>{{ registro.eletiva.nome }}</td>
+                                    <td>{{ registro.eletiva.get_dia_display }}</td>
+                                    <td>{{ registro.eletiva.get_periodo_display }}</td>
+                                    <td>{{ registro.eletiva.responsavel }}</td>
+                                    <td><button class="btn btn-danger" onclick="onDeletarClick(
+                                            {{registro.pk}}
+                                        )">Deletar</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">Histórico</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive table-sm">
+                        <table class="table" id="lista-dt">
+                            <thead>
+                                <th>Eletiva</th>
+                                <th>Dia</th>
+                                <th>Periodo</th>
+                                <th>Responsável</th>
+                                <th>Ano</th>
+                                <th>Semestre</th>
+                                <th>Eletiva Ativa</th>
+                            </thead>
+                            <tbody>
+                                {% for registro in registros %}
+                                <tr class="{% if registro.ativo %}table-success{% else %}table-secondary{% endif %}">
+                                    <td>{{ registro.eletiva.nome }}</td>
+                                    <td>{{ registro.eletiva.get_dia_display }}</td>
+                                    <td>{{ registro.eletiva.get_periodo_display }}</td>
+                                    <td>{{ registro.eletiva.responsavel }}</td>
+                                    <td>{{ registro.eletiva.ano }}</td>
+                                    <td>{{ registro.eletiva.semestre }}</td>
+                                    <td>{{ registro.eletiva.ativo }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block blockjs %}
+<script>
+    function onDeletarClick(id) {
+        console.log(id);
+        $.confirm({
+            title: "Confirmar ação",
+            content: "Deseja realmente apagar esse registro?",
+            buttons: {
+                "sim": function () {
+                    $.ajax({
+                        type: "DELETE",
+                        url: '{% url "backend:registros-list" %}' + String(id) + '/',
+                        success: function () {
+                            $.confirm({
+                                title: "Sucesso!",
+                                type: "green",
+                                content: "Registro removido com sucesso!",
+                                buttons: {
+                                    confirmar: function () {
+                                        location.reload();
+                                    },
+                                },
+                            });
+                        },
+                    });
+                },
+                "não": function () {
+                    //close
+                }
+            }
+        });
+
+    };
+    $(document).ready(function () {
+        const table = $(" #lista-dt").DataTable({
+            "language": {
+                url: "{% static 'json/dt-ptbr.json' %}"
+            }
+        });
+        const form = $('#aluno-form');
+
+
+        form.submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: form.serialize(),
+                type: form.attr('method'),
+                url: form.attr('action'),
+                success: function (res) {
+                    $.alert({
+                        title: 'Sucesso!',
+                        content: 'Aluno atualizado com sucesso!',
+                    });
+                    console.log("data updated: ", res);
+                },
+                error: function (res) {
+                    $.alert({
+                        title: 'Erro!',
+                        content: JSON.stringify(res)
+                    });
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+{% endblock %}

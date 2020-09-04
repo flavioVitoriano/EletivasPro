@@ -1,0 +1,103 @@
+{
+  "name": "project-template-react",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "npm": ">=5",
+    "node": ">=8.15.1"
+  },
+  "scripts": {
+    "presetup": "npm i chalk shelljs compare-versions -D -E",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "cross-env NODE_ICU_DATA=./node_modules/full-icu react-scripts test",
+    "setup": "node ./internals/scripts/setup.js",
+    "clean": "shjs ./internals/scripts/clean.js",
+    "coverage": "yarn test -- --coverage",
+    "eject": "react-scripts eject",
+    "lint": "npm run lint:js --scripts-prepend-node-path",
+    "lint:fix": "npm run lint:js:fix --scripts-prepend-node-path",
+    "lint:eslint": "eslint --ignore-path .gitignore",
+    "lint:eslint:fix": "eslint --ignore-path .gitignore --fix",
+    "lint:js": "npm run lint:eslint -- . ",
+    "lint:js:fix": "npm run lint:eslint:fix -- . ",
+    "lint:staged": "lint-staged",
+    "test:staged": "cross-env NODE_ICU_DATA=./node_modules/full-icu CI=true react-scripts test --env=jsdom --findRelatedTests",
+    "prettify": "prettier --write",
+    "generate": "plop --plopfile internals/generators/index.js"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:eslint:fix",
+      "npm run test:staged",
+      "git add --force"
+    ],
+    "*.json": [
+      "npm run prettify",
+      "git add --force"
+    ]
+  },
+  "pre-commit": "lint:staged",
+  "dependencies": {
+    "@types/react-select": "^3.0.8",
+    "antd": "^3.26.3",
+    "axios": "0.19.0",
+    "bootstrap": "^4.4.1",
+    "c2-react-picklist": "github:ClearC2/c2-react-picklist",
+    "connected-react-router": "6.6.0",
+    "formik": "^2.0.7",
+    "full-icu": "1.3.0",
+    "history": "4.10.1",
+    "immer": "5.0.0",
+    "lodash": "4.17.15",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "react-intl": "3.6.0",
+    "react-picklist": "^1.1.9",
+    "react-redux": "7.1.3",
+    "react-router": "5.1.2",
+    "react-router-dom": "5.1.2",
+    "react-scripts": "^3.3.0",
+    "reactstrap": "^8.1.1",
+    "redux": "4.0.4",
+    "redux-persist": "6.0.0",
+    "redux-saga": "1.1.3",
+    "reselect": "4.0.0",
+    "yup": "0.27.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "4.2.4",
+    "@testing-library/react": "9.3.2",
+    "babel-eslint": "10.0.3",
+    "chalk": "3.0.0",
+    "compare-versions": "3.5.1",
+    "cross-env": "6.0.3",
+    "eslint": "6.6.0",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-config-prettier": "6.6.0",
+    "eslint-import-resolver-webpack": "0.11.1",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-lodash": "6.0.0",
+    "eslint-plugin-prettier": "3.1.1",
+    "eslint-plugin-react": "7.16.0",
+    "eslint-plugin-react-hooks": "2.3.0",
+    "eslint-plugin-redux-saga": "1.1.1",
+    "eslint-plugin-simple-import-sort": "4.0.0",
+    "lint-staged": "9.4.3",
+    "node-sass": "4.13.0",
+    "plop": "2.5.3",
+    "pre-commit": "1.2.2",
+    "prettier": "1.19.1",
+    "prop-types": "15.7.2",
+    "redux-devtools-extension": "2.13.8",
+    "shelljs": "0.8.3"
+  }
+}

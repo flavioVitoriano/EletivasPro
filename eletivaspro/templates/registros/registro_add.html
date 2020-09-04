@@ -1,0 +1,293 @@
+{% extends 'gestao/home_base.html' %}
+
+{% block title %}Registrar EletivasPro{% endblock %}
+
+{% block blockcss %}
+<style>
+    .green {
+        background-color: lightgreen !important;
+    }
+
+    .red {
+        background-color: lightcoral !important;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="content">
+    {% if data.erro %}
+    <div class="row" style="margin-bottom:20px">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">
+                        <p class="text-text-danger">{{ data.erro }}</p>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if data.sucesso %}
+    <div class="row" style="margin-bottom:20px">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">
+                        <p class="text-success">{{ data.sucesso }}</p>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row" style="margin-bottom:20px">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">Registrar Aluno</h3>
+                </div>
+                <div class="card-body">
+                    <form id="registrar-form" method="POST" action="{% url 'backend:eletivas-list'%}">
+                        <div class="row" style="margin-bottom: 30px;">
+                            <div class="col-12">
+                                <input type="text" name="sige" id="sige" class="form-control"
+                                    placeholder="SIGE do aluno">
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom:20px">
+                            <div class="col-1">
+                                <label>Segunda: </label>
+                            </div>
+                            <div class="col-5">
+                                <select name="segunda" placeholder="Segunda Feira" id="select-segunda"
+                                    style="width: 100%">
+                                    <option value="">---------</option>
+                                    {% for eletiva in eletivas.segunda %}
+                                    <option value="{{ eletiva.pk }}"
+                                        class="{% if eletiva.vagas_usadas >= eletiva.vagas%}green{% else %}red{% endif %}">
+                                        {{eletiva.nome}} {% if eletiva.vagas_usadas >= eletiva.vagas %}
+                                        -LOTADO-{% endif %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-5">
+                                <p class="text-danger" id="error-segunda"></p>
+                                <p class="text-success" id="success-segunda"></p>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom:20px">
+                            <div class="col-1">
+                                <label>Terça: </label>
+                            </div>
+                            <div class="col-5">
+                                <select name="terca" placeholder="Terça Feira" id="select-terca" style="width: 100%">
+                                    <option value="">---------</option>
+                                    {% for eletiva in eletivas.terca %}
+                                    <option value="{{ eletiva.pk }}"
+                                        class="{% if eletiva.vagas_usadas >= eletiva.vagas%}green{% else %}red{% endif %}">
+                                        {{eletiva.nome}} {% if eletiva.vagas_usadas >= eletiva.vagas %}
+                                        -LOTADO-{% endif %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-5">
+                                <p class="text-danger" id="error-terca"></p>
+                                <p class="text-success" id="success-terca"></p>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom:20px">
+                            <div class="col-1">
+                                <label>Quarta: </label>
+                            </div>
+                            <div class="col-5">
+                                <select name="quarta" placeholder="Quarta Feira" id="select-quarta" style="width: 100%">
+                                    <option value="">---------</option>
+                                    {% for eletiva in eletivas.quarta %}
+                                    <option value="{{ eletiva.pk }}"
+                                        class="{% if eletiva.vagas_usadas >= eletiva.vagas%}green{% else %}red{% endif %}">
+                                        {{eletiva.nome}} {% if eletiva.vagas_usadas >= eletiva.vagas %}
+                                        -LOTADO-{% endif %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-5">
+                                <p class="text-danger" id="error-quarta"></p>
+                                <p class="text-success" id="success-quarta"></p>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:20px">
+                            <div class="col-1">
+                                <label>Quinta: </label>
+                            </div>
+
+                            <div class="col-5">
+                                <select name="quinta" placeholder="Quinta Feira" id="select-quinta" style="width: 100%">
+                                    <option value="">---------</option>
+                                    {% for eletiva in eletivas.quinta %}
+                                    <option value="{{ eletiva.pk }}"
+                                        class="{% if eletiva.vagas_usadas >= eletiva.vagas%}red{% else %}green{% endif %}">
+                                        {{eletiva.nome}} {% if eletiva.vagas_usadas >= eletiva.vagas %}
+                                        -LOTADO-{% endif %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-5">
+                                <p class="text-danger" id="error-quinta"></p>
+                                <p class="text-success" id="success-quinta"></p>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom:20px">
+                            <div class="col-1">
+                                <label>Sexta: </label>
+                            </div>
+                            <div class="col-5">
+                                <select name="sexta" placeholder="Sexta Feira" id="select-sexta" style="width: 100%">
+                                    <option value="">---------</option>
+                                    {% for eletiva in eletivas.sexta %}
+                                    <option value="{{ eletiva.pk }}"
+                                        class="{% if eletiva.vagas_usadas >= eletiva.vagas%}green{% else %}red{% endif %}">
+                                        {{eletiva.nome}} {% if eletiva.vagas_usadas >= eletiva.vagas %}
+                                        -LOTADO-{% endif %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-5">
+                                <p class="text-danger" id="error-sexta"></p>
+                                <p class="text-success" id="success-sexta"></p>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom:20px">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-info btn-block">
+                                        <span class="glyphicon glyphicon-ok"></span> Registrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block blockjs %}
+<script>
+    $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+    $(document).ready(function () {
+        $('#select-segunda').select2();
+        $('#select-terca').select2();
+        $('#select-quarta').select2();
+        $('#select-quinta').select2();
+        $('#select-sexta').select2();
+
+        const form = $('#registrar-form');
+
+        form.submit(function (e) {
+            e.preventDefault();
+
+            const data = form.serializeObject();
+            const sige = data.sige;
+            delete data['sige'];
+
+            $.ajax({
+                type: "GET",
+                url: "{% url 'backend:alunos-list' %}",
+                data: {
+                    sige: sige
+                },
+                success: function (res) {
+                    const results = res.results;
+                    if (!results.length) {
+                        $.alert({
+                            title: "Erro",
+                            type: "red",
+                            content: "Aluno não encontrado!"
+                        });
+                        return;
+                    }
+
+                    const aluno = results[0];
+                    let successDays = [];
+                    let failureDays = [];
+
+                    for (let key in data) {
+                        if (!data[key]) {
+                            $(`error-${key}`).text("");
+                            continue;
+                        }
+                        console.log(data[key]);
+
+                        const register = {
+                            aluno: aluno.id,
+                            eletiva: data[key],
+                        };
+
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'backend:registros-list' %}",
+                            data: register,
+                            async: false,
+                            success: function () {
+                                successDays.push(key);
+                                $(`#success-${key}`).text(
+                                    'Registrado com sucesso!');
+
+                            },
+                            error: function (res) {
+                                console.log(res);
+                                $(`#error-${key}`).text(res
+                                    .responseJSON.error);
+                                failureDays.push(key);
+                                return;
+                            }
+                        });
+                    }
+
+                    const msg = "Dias registrados com sucesso: \n" + (successDays
+                            .toString() || "Nenhum") +
+                        "\nDias registrados com fracasso: \n" + (failureDays.toString() ||
+                            "Nenhum");
+                    $.alert({
+                        title: "Relatório",
+                        type: "blue",
+                        content: msg,
+                    });
+                },
+                error: function (res) {
+                    $.alert({
+                        title: "Erro com o servidor!",
+                        content: res
+                    });
+                }
+            });
+
+            console.log(data);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,35 @@
+/**
+ *
+ * Tests for {{>containerName}}
+ *
+ */
+
+import React from 'react';
+import { render } from 'utils/testLibrary';
+
+import {{>containerName}} from '../index';
+
+describe('<{{>containerName}} />', () => {
+  it('Expect to not log errors in console', () => {
+    const spy = jest.spyOn(global.console, 'error');
+    const dispatch = jest.fn();
+    render(<{{>containerName}} dispatch={dispatch} />);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('expect to have additional unit tests specified', () => {
+    expect(true).toEqual(false);
+  });
+
+  /**
+   * Unskip this test to use it
+   *
+   * @see {@link https://jestjs.io/docs/en/api#testskipname-fn}
+   */
+  it.skip('should render and match the snapshot', () => {
+    const {
+      container: { firstChild },
+    } = render(<{{>containerName}} />);
+    expect(firstChild).toMatchSnapshot();
+  });
+});

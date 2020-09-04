@@ -1,0 +1,33 @@
+/**
+ *
+ * {{>componentName}}
+ *
+ */
+
+{{#if wantMemo}}
+import React, { memo } from 'react';
+{{else}}
+import React from 'react';
+{{/if}}
+// import PropTypes from 'prop-types';
+{{#if wantMessages}}
+import { FormattedMessage } from 'react-intl';
+{{/if}}
+
+const {{>componentName}} = () => (
+  {{#if wantMessages}}
+    <div>
+      <FormattedMessage id="components.{{>propertyName}}.header" />
+    </div>
+  {{else}}
+    <div>{{>componentName}}</div>
+  {{/if}}
+);
+
+{{>componentName}}.propTypes = {};
+
+{{#if wantMemo}}
+export default memo({{>componentName}});
+{{else}}
+export default {{>componentName}};
+{{/if}}

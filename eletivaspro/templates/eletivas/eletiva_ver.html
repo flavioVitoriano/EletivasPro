@@ -1,0 +1,122 @@
+{% extends 'gestao/home_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Ver Eletiva {% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">{{ object.nome }}</h3>
+                </div>
+                <div class="card-body">
+                    <form method="PATCH" id="eletiva-form" action="{% url 'backend:eletivas-list' %}{{ object.pk}}/">
+
+                        {% include 'forms/eletiva_update_form.html' %}
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-head">
+                    <h3 class="card-title text-center">Registros</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-sm">
+                        <table id="lista-dt" class="table">
+                            <thead>
+                                <th>Aluno</th>
+                                <th>Serie</th>
+                                <th>Turma</th>
+                                <th>Remover</th>
+                            </thead>
+                            <tbody>
+                                {% for registro in registros %}
+                                <tr>
+                                    <td>{{ registro.aluno.nome }}</td>
+                                    <td>{{ registro.aluno.get_serie_display }}</td>
+                                    <td>{{ registro.aluno.get_turma_display }}</td>
+                                    <td><button class="btn btn-danger" onclick="onDeletarClick(
+                                        {{registro.pk}}
+                                    )">Remover</button></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+{% block blockjs %}
+<script>
+    function onDeletarClick(id) {
+        console.log(id);
+        $.confirm({
+            title: "Confirmar ação",
+            content: "Deseja realmente apagar esse registro?",
+            buttons: {
+                "sim": function () {
+                    $.ajax({
+                        type: "DELETE",
+                        url: '{% url "backend:registros-list" %}' + String(id) + '/',
+                        success: function () {
+                            $.confirm({
+                                title: "Sucesso!",
+                                content: "Registro removido com sucesso!",
+                                buttons: {
+                                    confirmar: function () {
+                                        location.reload();
+                                    },
+                                },
+                            });
+                        },
+                    });
+                },
+                "não": function () {
+                    $(this).close();
+                }
+            }
+        });
+
+    };
+    $(document).ready(function () {
+        const table = $("#lista-dt").DataTable({
+            "language": {
+                url: "{% static 'json/dt-ptbr.json' %}"
+            }
+        });
+        const form = $('#eletiva-form');
+
+
+        form.submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: form.serialize(),
+                type: form.attr('method'),
+                url: form.attr('action'),
+                success: function (res) {
+                    $.alert({
+                        title: 'Info',
+                        content: 'Eletiva atualizada com sucesso!',
+                    });
+                    console.log("data updated: ", res);
+
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+{% endblock %}

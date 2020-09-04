@@ -1,0 +1,12 @@
+{% load widget_tweaks %}
+<div class="form-label-group">
+    {% render_field form.username class="form-control line-input" placeholder="Usuário" required="true" autofocus="true" %}
+  <label for="inputEmail">Usuário</label>
+</div>
+
+<div class="form-label-group">
+    {% render_field form.password type="password" class="form-control line-input" placeholder="Senha" required="true" %}
+  <label for="inputPassword">Password</label>
+</div>
+
+<button class="btn btn-lg btn-primary btn-block btn-signin text-uppercase" type="submit">Entrar</button>

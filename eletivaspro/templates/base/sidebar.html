@@ -1,0 +1,77 @@
+<div class="sidebar" data-color="black">
+
+    <div class="logo">
+        <a href="#" class="simple-text logo-mini">
+            PRO -
+        </a>
+
+        <a href="{% url 'gestao:home' %}" class="simple-text logo-normal">
+            EletivasPRO
+        </a>
+    </div>
+    <div class="sidebar-wrapper" id="sidebar-wrapper">
+        <ul class="nav">
+            <li class="active">
+                <a href="">
+                    <i style="color: black;" class="now-ui-icons users_circle-08"></i>
+
+                    <p style="color: black;">{{ request.user.username }}</p>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'gestao:alunos' %}">
+
+                    <i class="now-ui-icons education_hat"></i>
+
+                    <p>Alunos</p>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'gestao:eletivas' %}">
+
+                    <i class="now-ui-icons files_single-copy-04"></i>
+
+                    <p>Eletivas</p>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'gestao:registros' %}">
+
+                    <i class="now-ui-icons education_agenda-bookmark"></i>
+
+                    <p>Registros</p>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'gestao:gestao' %}">
+
+                    <i class="now-ui-icons tech_laptop"></i>
+
+                    <p>Gestão</p>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'gestao:gestao' %}">
+
+                    <i class="now-ui-icons tech_laptop"></i>
+
+                    <p>Manutenção</p>
+                </a>
+            </li>
+
+            <li class="active-pro">
+                <a href="{% url 'auth:logout' %}">
+
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+
+                    <p>Sair</p>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>

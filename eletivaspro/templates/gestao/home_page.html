@@ -1,0 +1,124 @@
+{% extends 'gestao/home_base.html' %}
+
+{% block title %} EletivasPRO | Página Inicial {% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col">
+            <div class="card card-tasks">
+                <div class="card-header">
+                    <h3 class="card-title text-center">Totais</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-full-width table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Alunos registrados</td>
+                                    <td>{{ quantidades.alunos }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Eletivas Registradas</td>
+                                    <td>{{ quantidades.eletivas }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Registros feitos</td>
+                                    <td>{{ quantidades.registros }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">Ultimas Eletivas Adicionadas</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <th>Nome</th>
+                                <th>Responsável</th>
+                            </thead>
+                            <tbody>
+                                {% for eletiva in ultimas_eletivas %}
+                                <tr>
+                                    <td>{{ eletiva.nome }}</td>
+                                    <td>{{ eletiva.responsavel }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">Ultimos Registros Feitos</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <th>Aluno</th>
+                                <th>Eletiva</th>
+                            </thead>
+                            <tbody>
+                                {% for registro in ultimos_registros %}
+                                <tr>
+                                    <td>{{ registro.aluno.nome }}</td>
+                                    <td>{{ registro.eletiva.nome }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Ultimos alunos registrados</h3>
+                </div>
+                <div class="card-body">
+                    {% if ultimos_alunos is not None %}
+                    <div class="table-responsive table-full-width">
+                    <table class="table">
+                        <thead>
+                            <th>SIGE</th>
+                            <th>Série</th>
+                            <th>Turma</th>
+                        </thead>
+                        <tbody>
+                            {% for aluno in ultimos_alunos %}
+                                <tr>
+                                    <td>{{ aluno.sige }}</td>
+                                    <td>{{ aluno.get_serie_display }}</td>
+                                    <td>{{ aluno.get_turma_display }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                    {% else %}
+                    <h2 class="title text-center">Nenhum Aluno registrado</h2>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

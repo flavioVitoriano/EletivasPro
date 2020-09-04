@@ -1,0 +1,31 @@
+/**
+ *
+ * {{>containerName}} selectors
+ *
+ */
+
+import { createSelector } from 'reselect';
+import { initialState } from './reducer';
+
+/**
+ * Direct selector to the {{>propertyName}} state domain
+ */
+
+const select{{>containerName}}Domain = state => state.{{>propertyName}} || initialState;
+
+/**
+ * Other specific selectors
+ */
+
+/**
+ * Default selector used by {{>containerName}}
+ */
+
+const makeSelect{{>containerName}} = () =>
+  createSelector(
+    select{{>containerName}}Domain,
+    subState => subState,
+  );
+
+export default makeSelect{{>containerName}};
+export { select{{>containerName}}Domain };

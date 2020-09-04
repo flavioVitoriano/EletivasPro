@@ -1,0 +1,22 @@
+{% extends 'gestao/home_base.html' %}
+
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">Certeza que deseja deletar o registro?</h3>
+                </div>
+                <div class="card-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <button class="submit btn btn-warning btn-block">Apagar</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

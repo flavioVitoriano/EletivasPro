@@ -1,0 +1,97 @@
+{% extends 'gestao/home_base.html' %}
+{% load static %}
+
+{% block title %}Eletivas EletivasPro{% endblock %}
+
+
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">Eletivas</h3>
+                </div>
+                <div class="card-body">
+                    <a class="btn btn-info" href="{% url 'gestao:eletiva_add' %}">Criar Nova Eletiva</a>
+                    <a class="btn btn-info" href="{% url 'gestao:eletiva_add' %}">Desativar Eletivas</a>
+                    <a class="btn btn-info" href="{% url 'gestao:eletiva_add' %}">Ativar Eletivas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Eletivas Cadastradas</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-condensed">
+                        <table id="lista-dt" class="table display">
+                            <thead>
+                                <th>codigo</th>
+                                <th>Descrição</th>
+                                <th>Dia</th>
+                                <th>Período</th>
+                                <th>Vagas</th>
+                                <th>V. Usadas</th>
+                                <th>Ver</th>
+                            </thead>
+                            <tbody>
+                                {% for eletiva in object_list %}
+                                <tr
+                                    class="{% if not eletiva.ativo %}table-secondary{% elif eletiva.vagas <= eletiva.vagas_usadas %}table-danger{% else %}table-success{% endif %}">
+                                    <td>{{eletiva.codigo}}</td>
+                                    <td>{{eletiva.nome}}</td>
+                                    <td>{{eletiva.get_dia_display}}</td>
+                                    <td>{{eletiva.get_periodo_display}}</td>
+                                    <td>{{eletiva.vagas}}</td>
+                                    <td>{{eletiva.vagas_usadas}}</td>
+                                    <td><a class="btn btn-info" href="{% url 'gestao:eletiva_ver' eletiva.id%}">Ver</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if is_paginated %}
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                            <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                            {% else %}
+                            <li class="disabled"><span>&laquo;</span></li>
+                            {% endif %}
+                            {% for i in paginator.page_range %}
+                            {% if page_obj.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                            {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                            {% else %}
+                            <li class="disabled"><span>&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block blockjs %}
+<script>
+    $(document).ready(function () {
+        var table = $("#lista-dt").DataTable({
+            "language": {
+                url: "{% static 'json/dt-ptbr.json' %}"
+            }
+        });
+
+    });
+</script>
+{% endblock %}

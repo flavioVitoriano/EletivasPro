@@ -1,0 +1,43 @@
+/**
+ *
+ * {{>containerName}}
+ *
+ */
+
+{{#if wantMemo}}
+import React, { memo } from 'react';
+{{else}}
+import React from 'react';
+{{/if}}
+{{#if wantMessages}}
+import { FormattedMessage } from 'react-intl';
+{{/if}}
+{{#if wantActionsAndReducer}}
+import { useSelector, useAction } from 'utils/hooks';
+{{/if}}
+{{#if wantActionsAndReducer}}
+import makeSelect{{>containerName}} from './selectors';
+import { defaultAction } from './actions';
+{{/if}}
+
+const {{>containerName}} = () => {
+  {{#if wantActionsAndReducer}}
+  const {{>propertyName}} = useSelector(makeSelect{{>containerName}}());
+  const defaultCallback = useAction(defaultAction);
+  {{/if}}
+  return (
+    {{#if wantMessages}}
+      <div>
+        <FormattedMessage id="containers.{{>propertyName}}.header" />
+      </div>
+    {{else}}
+      <div>{{>containerName}}</div>
+    {{/if}}
+  );
+};
+
+{{#if wantMemo}}
+export default memo({{>containerName}});
+{{else}}
+export default {{>containerName}};
+{{/if}}

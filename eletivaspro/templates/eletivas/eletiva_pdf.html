@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Registro por Eletiva</title>
+        <meta charset="utf-8">
+        <style type="text/css">
+            @page {
+                size: "A4";
+                margin: 1cm;
+                @frame footer {
+                    -pdf-frame-content: footerContent;
+                    bottom: 0cm;
+                    margin-left: 9cm;
+                    margin-right: 9cm;
+                    height: 1cm;
+                }
+            }
+         table {
+                border-collapse: collapse;
+                width: 100%;
+              }
+              
+              th, td {
+                text-align: left;
+                padding: 8px;
+                border-bottom: 1px solid #ddd;
+              }
+              
+              tr:nth-child(even){background-color: #f2f2f2}
+              
+              th {
+                background-color:#2196F3 ;
+                color: white;
+              }
+        </style>
+    </head>
+    <body>
+        <div>
+            <table>
+                <thead>
+                    <th colspan=4 style="text-align: center;"><h3>{{eletiva.nome}}</h3></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Matrícula</b></td>
+                        <td><b>Nome</b></td>
+                        <td><b>Serie</b></td>
+                        <td><b>Turma</b></td>
+                    </tr>
+                    {% for registro in eletiva.registros.all %}
+                    <tr>
+                        <td>{{registro.aluno.sige}}</td>
+                        <td>{{registro.aluno.nome}}</td>
+                        <td>{{registro.aluno.serie}}</td>
+                        <td>{{registro.aluno.turma}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+        </div>
+        <div id="footerContent">
+            {%block page_foot%}
+                Page <pdf:pagenumber>
+            {%endblock%}
+        </div>
+    </body>
+</html>

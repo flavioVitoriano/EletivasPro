@@ -1,0 +1,23 @@
+{% extends 'gestao/home_base.html' %}
+
+{% block title %}Adicionar Eletiva{% endblock %}
+
+
+{% block content %}
+<div class="content">
+    
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">Adicionar Eletiva</h3>
+                </div>
+                <div class="card-body">
+                    {% include 'forms/eletiva_form.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

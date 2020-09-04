@@ -1,0 +1,88 @@
+{% extends 'gestao/home_base.html' %}
+{% load static %}
+
+{% block title %}Alunos EletivasPro{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">Cadastrar Aluno</h3>
+                </div>
+                <div class="card-body">
+                    <a class="btn btn-block btn-info" href="{% url 'gestao:aluno_add' %}">Clique Aqui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Alunos Cadastrados</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="lista-dt" class="table display">
+                            <thead>
+                                <th>Sige</th>
+                                <th>Nome</th>
+                                <th>Série</th>
+                                <th>Turma</th>
+                                <th>Ver</th>
+                            </thead>
+                            <tbody>
+                                {% for aluno in object_list %}
+                                <tr>
+                                    <td>{{aluno.sige}}</td>
+                                    <td>{{aluno.nome}}</td>
+                                    <td>{{aluno.get_serie_display}}</td>
+                                    <td>{{aluno.get_turma_display}}</td>
+                                    <td><a class="btn btn-info" href="{% url 'gestao:aluno_ver' aluno.id%}">Ver</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if is_paginated %}
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                            <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                            {% else %}
+                            <li class="disabled"><span>&laquo;</span></li>
+                            {% endif %}
+                            {% for i in paginator.page_range %}
+                            {% if page_obj.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                            {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                            {% else %}
+                            <li class="disabled"><span>&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block blockjs %}
+<script>
+    $(document).ready(function () {
+        var table = $("#lista-dt").DataTable({
+            "language": {
+                url: "{% static 'json/dt-ptbr.json' %}"
+            }
+        });
+    });
+</script>
+{% endblock %}
